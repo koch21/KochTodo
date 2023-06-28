@@ -192,6 +192,7 @@ export function ScrollableDates(props: ScrollableDatesProps) {
               marginLeft: marginLeft,
             }}
           >
+            {/* TODO: REMOVER ESSE BOTAO E FAZER TODO O COMPONENTE SE TORNAR UM MODAL QUE CRESCE DE FORMA ANIMADA */}
             <Icon name="sliders" size={26} color="blue" />
           </TouchableOpacity>
         </View>
