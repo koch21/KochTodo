@@ -1,11 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useCallback, useState } from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import moment from "moment";
 
-export default function App() {
+import { AnimatedCalendar } from "./src/components/animatedCalendar";
+
+export default function App(props: any) {
+  const [visible, setVisible] = useState(false);
+  const [dateSelected, setDateSelected] = useState<string>(
+    moment().format("YYYY-MM-DD")
+  );
+
+  const handleExpandCalendar = useCallback(() => {
+    setVisible(true);
+  }, []);
+
+  const handleDismissCalendar = useCallback(() => {
+    setVisible(false);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+      {/* Scrollable Calendar */}
+      <AnimatedCalendar
+        onExpandCalendar={handleExpandCalendar}
+        onDismissCalendar={handleDismissCalendar}
+        currentDate={dateSelected}
+        onFilter={setDateSelected}
+        navigation={props.navigation}
+      />
+      {/* List with the buttom that cover all the screen with some icon in the left text in the middle and a simple ball in the right  */}
+      {/* A buttom with a PLUS icon to add more todo */}
     </View>
   );
 }
@@ -13,8 +39,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: Platform.OS === "ios" ? 50 : 30,
   },
 });
